@@ -14,11 +14,31 @@ app.get('/', (_request, response) => {
 });
 
 // Requisito 01
+// Base para resolução do requisito retirada do dia 22.4
 app.get('/talker', async (_req, res) => {
   const talker = await readTalkers();
 
   if (talker) {
     res.status(200).json(talker);
+  }
+});
+
+// Requisito 02
+// Base para resolução do requisito retirada do conteúdo sobre Parâmetros de rota do dia 22.4
+// try/catch retirado do conteúdo sobre aync/await do dia 22.2
+app.get('/talker/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const talkerId = await readTalkers();
+  
+    if (talkerId) {
+      const person = talkerId.find((element) => element.id === Number(id));
+      
+      if (person) return res.status(200).json(person);
+      return res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
+    }
+  } catch (error) {
+      console.error('Erro na requisição');
   }
 });
 
