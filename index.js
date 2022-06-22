@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { readTalkers } = require('./services');
+const { readTalkers, randomToken } = require('./services');
 
 const app = express();
 app.use(bodyParser.json());
@@ -41,6 +41,26 @@ app.get('/talker/:id', async (req, res) => {
       console.error('Erro na requisição');
   }
 });
+
+// Requisito 3
+app.post('/login', (_req, res) => {
+  const token = randomToken();
+  res.status(200).json({ token });
+});
+
+// Outra forma de resolver o requisito 3
+/* app.post('/login', (_req, res) => {
+  function geraStringAleatoria(tamanho) {
+    let stringAleatoria = '';
+    const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    for (let i = 0; i < tamanho; i += 1) {
+        stringAleatoria += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+    }
+    return stringAleatoria;
+  }
+  const token = geraStringAleatoria(16);
+  res.status(200).json({ token });
+}); */
 
 app.listen(PORT, () => {
   console.log('Online');
