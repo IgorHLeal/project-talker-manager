@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { readTalkers, randomToken } = require('./services');
+const { readTalkers, randomToken, validLogin } = require('./services');
+// const { validLogin } = require('./login');
 
 const app = express();
 app.use(bodyParser.json());
@@ -43,17 +44,18 @@ app.get('/talker/:id', async (req, res) => {
 });
 
 // Requisito 3
-app.post('/login', (_req, res) => {
+app.post('/login', validLogin, (_req, res) => {
   const token = randomToken();
   res.status(200).json({ token });
 });
 
 // Outra forma de resolver o requisito 3
+// Referência: https://www.webtutorial.com.br/funcao-para-gerar-uma-string-aleatoria-random-com-caracteres-especificos-em-javascript/
 /* app.post('/login', (_req, res) => {
   function geraStringAleatoria(tamanho) {
     let stringAleatoria = '';
     const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    for (let i = 0; i < tamanho; i += 1) {
+    for (let index = 0; index < tamanho; index += 1) {
         stringAleatoria += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
     }
     return stringAleatoria;
