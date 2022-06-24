@@ -13,6 +13,8 @@ const {
   validateRate,
 } = require('./midlewares/validationTalkers');
 
+const { writeTalkerId } = require('./midlewares/validationTalkerId');
+
 const app = express();
 app.use(bodyParser.json());
 
@@ -83,6 +85,16 @@ app.post('/talker',
   validateWatched,
   validateRate,
   writeTalker);
+
+// Requisito 06
+app.put('/talker/:id',
+validateToken,
+  validateName,
+  validateAge,
+  validateTalk,
+  validateWatched,
+  validateRate,
+  writeTalkerId);
 
 app.listen(PORT, () => {
   console.log('Online');
