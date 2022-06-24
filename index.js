@@ -1,7 +1,17 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { readTalkers, randomToken, validLogin } = require('./services');
-// const { validLogin } = require('./login');
+
+const { readTalkers, randomToken } = require('./services');
+const { validLogin } = require('./midlewares/validLogin');
+const {
+  validateToken,
+  validateName,
+  validateAge,
+  validateTalk,
+  writeTalker,
+  validateWatched,
+  validateRate,
+} = require('./midlewares/validationTalkers');
 
 const app = express();
 app.use(bodyParser.json());
@@ -63,6 +73,16 @@ app.post('/login', validLogin, (_req, res) => {
   const token = geraStringAleatoria(16);
   res.status(200).json({ token });
 }); */
+
+// Requisito 05
+app.post('/talker',
+  validateToken,
+  validateName,
+  validateAge,
+  validateTalk,
+  validateWatched,
+  validateRate,
+  writeTalker);
 
 app.listen(PORT, () => {
   console.log('Online');
