@@ -9,14 +9,14 @@ const readTalkers = async () => {
 };
 
 // Requisito 3
-const randomToken = () => {
+const generateRandomToken = () => {
   const token = crypto.randomBytes(8).toString('hex');
   return token;
 };
 
 module.exports = { 
   readTalkers,
-  randomToken,
+  generateRandomToken,
 };
 
 // ---------- REFERÊNCIAS ----------
