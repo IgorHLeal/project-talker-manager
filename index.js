@@ -14,6 +14,7 @@ const {
 } = require('./midlewares/validationTalkers');
 
 const { writeTalkerId } = require('./midlewares/validationTalkerId');
+const { deleteTalker } = require('./midlewares/deleteTalker');
 
 const app = express();
 app.use(bodyParser.json());
@@ -95,6 +96,9 @@ validateToken,
   validateWatched,
   validateRate,
   writeTalkerId);
+
+// Requisito 07
+app.delete('/talker/:id', validateToken, deleteTalker);
 
 app.listen(PORT, () => {
   console.log('Online');
