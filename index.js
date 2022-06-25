@@ -2,19 +2,16 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const { readTalkers, randomToken } = require('./services');
-const { validLogin } = require('./midlewares/validLogin');
-const {
-  validateToken,
-  validateName,
-  validateAge,
-  validateTalk,
-  writeTalker,
-  validateWatched,
-  validateRate,
-} = require('./midlewares/validationTalkers');
-
-const { writeTalkerId } = require('./midlewares/validationTalkerId');
+const { validationLogin } = require('./midlewares/validationLogin');
+const { validationToken } = require('./midlewares/validationToken');
+const { validationName } = require('./midlewares/validationName');
+const { validationAge } = require('./midlewares/validationAge');
+const { validationTalk } = require('./midlewares/validationTalk');
+const { validationWatched } = require('./midlewares/validationWatched');
+const { validationRate } = require('./midlewares/validationRate');
+const { validationTalkerId } = require('./midlewares/validationTalkerId');
 const { deleteTalker } = require('./midlewares/deleteTalker');
+const { writeTalker } = require('./midlewares/writeTalker');
 
 const app = express();
 app.use(bodyParser.json());
@@ -57,7 +54,7 @@ app.get('/talker/:id', async (req, res) => {
 });
 
 // Requisito 3
-app.post('/login', validLogin, (_req, res) => {
+app.post('/login', validationLogin, (_req, res) => {
   const token = randomToken();
   res.status(200).json({ token });
 });
@@ -79,26 +76,26 @@ app.post('/login', validLogin, (_req, res) => {
 
 // Requisito 05
 app.post('/talker',
-  validateToken,
-  validateName,
-  validateAge,
-  validateTalk,
-  validateWatched,
-  validateRate,
+  validationToken,
+  validationName,
+  validationAge,
+  validationTalk,
+  validationWatched,
+  validationRate,
   writeTalker);
 
 // Requisito 06
 app.put('/talker/:id',
-validateToken,
-  validateName,
-  validateAge,
-  validateTalk,
-  validateWatched,
-  validateRate,
-  writeTalkerId);
+validationToken,
+  validationName,
+  validationAge,
+  validationTalk,
+  validationWatched,
+  validationRate,
+  validationTalkerId);
 
 // Requisito 07
-app.delete('/talker/:id', validateToken, deleteTalker);
+app.delete('/talker/:id', validationToken, deleteTalker);
 
 app.listen(PORT, () => {
   console.log('Online');

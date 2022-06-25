@@ -1,7 +1,6 @@
 const fs = require('fs').promises;
 const { readTalkers } = require('../services');
 
-// Requisito 07
 const deleteTalker = async (req, res) => {
   const { id } = req.params;
   const talker = await readTalkers();

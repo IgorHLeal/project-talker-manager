@@ -1,8 +1,7 @@
 const fs = require('fs').promises;
-
 const { readTalkers } = require('../services');
 
-const writeTalkerId = async (req, res) => {
+const validationTalkerId = async (req, res) => {
   const { name, age, talk } = req.body;
   const { id } = req.params;
 
@@ -18,6 +17,4 @@ const writeTalkerId = async (req, res) => {
   res.status(200).json(newTalker);
 };
 
-module.exports = { 
-  writeTalkerId,
-};
+module.exports = { validationTalkerId };
