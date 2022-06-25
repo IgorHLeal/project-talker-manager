@@ -14,6 +14,7 @@ const { validationRate } = require('./midlewares/validationRate');
 const { validationEditTalkerId } = require('./midlewares/validationEditTalkerId');
 const { deleteTalker } = require('./midlewares/deleteTalker');
 const { writeTalker } = require('./midlewares/writeTalker');
+const { searchEndpoint } = require('./midlewares/searchEndpoint');
 
 const app = express();
 app.use(bodyParser.json());
@@ -28,6 +29,9 @@ app.get('/', (_request, response) => {
 
 // Requisito 01
 app.get('/talker', validationTalker);
+
+// Requisito 08
+app.get('/talker/search', validationToken, searchEndpoint);
 
 // Requisito 02
 app.get('/talker/:id', validationTalkerId);
@@ -47,7 +51,7 @@ app.post('/talker',
 
 // Requisito 06
 app.put('/talker/:id',
-validationToken,
+  validationToken,
   validationName,
   validationAge,
   validationTalk,
