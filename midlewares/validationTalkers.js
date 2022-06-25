@@ -61,7 +61,7 @@ const validateWatched = (req, res, next) => {
 const validateRate = (req, res, next) => {
   const { talk: { rate } } = req.body;
 
-  if (!rate || rate === '') {
+  if (rate === undefined || rate === '') {
     return res.status(400).json({ message: 'O campo "rate" é obrigatório' });
   }
   if (rate < 1 || rate > 5) {
@@ -93,3 +93,4 @@ module.exports = {
 // ---------- REFERẼNCIAS ----------
 
 // moment: https://momentjs.com/docs/
+// Lógica dos exercícios do dia 22.5 foi usada para resolver esses requisitos
